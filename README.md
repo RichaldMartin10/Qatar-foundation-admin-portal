@@ -263,6 +263,6 @@ http://localhost:5000
 
 ## Author
 
-Richald Martin
-MCA Student
-Nitte Meenakshi Institute of Technology
+Richald Martin,
+MCA Student,
+Nitte Meenakshi Institute of Technology.
