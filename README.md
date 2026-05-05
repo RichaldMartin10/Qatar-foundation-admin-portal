@@ -1,203 +1,268 @@
-# 📘 CertifyMe — Full Stack Intern Assessment
+# Qatar Foundation Admin Portal
+
+A full backend implementation for the Qatar Foundation Admin Portal built using Python and Flask. This project integrates the provided Admin UI with a functional backend while keeping the frontend design and layout unchanged.
+
+## Overview
+
+The project implements:
+
+* Admin Authentication System
+* Opportunity Management System
+* Secure Session Handling
+* Database Persistence
+* CRUD Operations for Opportunities
+
+The frontend UI was pre-built and remained unchanged. Only backend logic and JavaScript API integration were implemented.
 
 ---
 
-## 🚀 Getting Started
+## Tech Stack
 
-1. **Clone the provided repository**
-   ```bash
-   git clone https://github.com/Neerajvs32/Test1.git
-   ```
+### Backend
 
-2. **Create your own GitHub repository**
-   - Push the cloned project to your own GitHub account.
-   - Share your repository link after completing the task.
+* Python
+* Flask
+* Flask-SQLAlchemy
+* Flask-CORS
+* SQLite
 
-3. **Development Requirement**
-   - Both Frontend and Backend must run together.
-   - The UI must remain exactly the same.
-   - ❌ Do NOT modify frontend design or components.
-   - ✅ Build the backend required for the existing UI functionality.
+### Frontend
 
----
+* HTML
+* CSS
+* JavaScript
 
-## 🏢 Project Overview
+### Security
 
-This project is part of the **CertifyMe Full Stack Intern Assessment**. The repository already contains a complete Admin UI. Your responsibility is to **build the backend and connect it with the existing frontend**.
-
-### Objectives
-- Build backend APIs using Flask
-- Connect frontend with backend
-- Store and retrieve data from database
-- Make the application fully functional
-
-### 🔗 Original Repository
-[https://github.com/Neerajvs32/Test1](https://github.com/Neerajvs32/Test1)
+* Werkzeug Password Hashing
+* Flask Sessions
 
 ---
 
-## ⚙️ Tech Stack
+## Features
 
-| Layer | Technology |
-|---|---|
-| Backend | Python |
-| Framework | Flask |
-| Database | SQLite / MySQL / PostgreSQL |
-| Frontend | Pre-built Admin UI |
+## Authentication
 
----
-
-## 🧩 Features & User Stories
+* Admin Signup
+* Admin Login
+* Remember Me Functionality
+* Forgot Password Token Generation
+* Logout
+* Session Persistence
 
 ---
 
-### ✅ Task 1 — Authentication *(Day 1)*
+## Opportunity Management
+
+* Create New Opportunity
+* View All Opportunities
+* View Opportunity Details
+* Edit Opportunity
+* Delete Opportunity
 
 ---
 
-#### US-1.1 — Admin Sign Up
+## Security Features
 
-**Required Fields**
-- Full Name
-- Email
-- Password
-- Confirm Password
-
-**Validations**
-- All fields mandatory
-- Email must be valid
-- Password minimum 8 characters
-- Passwords must match
-- Email must be unique
-
-**Expected Result**
-- Save admin account
-- Redirect to Login page
+* Password Hashing
+* Protected API Routes
+* Ownership-Based Access Control
+* Session Validation
+* Generic Authentication Error Messages
 
 ---
 
-#### US-1.2 — Admin Login
+## Database Schema
 
-**Fields**
-- Email
-- Password
-- Remember Me checkbox
+### Admin Table
 
-**Rules**
-- Show generic error on failure:
-  ```
-  Invalid email or password
-  ```
+Stores admin account information.
 
-**Expected Result**
-- Redirect to dashboard
-- Load opportunities created by the admin
+Fields:
 
-**Session Handling**
-
-| Condition | Behaviour |
-|---|---|
-| Remember Me checked | Long-lived session |
-| Remember Me unchecked | Session ends when browser closes |
+* id
+* full_name
+* email
+* password_hash
+* created_at
 
 ---
 
-#### US-1.3 — Forgot Password
+### Opportunity Table
 
-**Requirements**
-- Admin enters their email
-- Always show the same success message (regardless of whether email exists)
+Stores opportunity details linked to admins.
 
-**Behaviour**
-- Generate reset link internally
-- No email sending required
+Fields:
 
-**Security**
-- Reset link expires after **1 hour**
-- Expired link shows an error
-
----
-
-### ✅ Task 2 — Opportunity Management *(Day 2)*
-
-> All opportunities must be stored in the database, linked to the logged-in admin, and must never use hardcoded data.
+* id
+* admin_id
+* name
+* duration
+* start_date
+* description
+* skills
+* category
+* future_opportunities
+* max_applicants
+* created_at
 
 ---
 
-#### US-2.1 — View All Opportunities
+### Password Reset Table
 
-**Each opportunity card must display:**
-- Opportunity Name
-- Category
-- Duration
-- Start Date
-- Description
+Stores reset tokens for forgot password functionality.
 
-**Rules**
-- Show only the logged-in admin's opportunities
-- Remove all demo / hardcoded cards
-- Show an empty state if no opportunities exist
+Fields:
+
+* id
+* admin_id
+* token
+* expires_at
+* used
 
 ---
 
-#### US-2.2 — Add New Opportunity
+## API Endpoints
 
-**Required Fields**
-- Opportunity Name
-- Duration
-- Start Date
-- Description
-- Skills to Gain *(comma separated)*
-- Category
-- Future Opportunities
+### Authentication APIs
 
-**Optional Field**
-- Maximum Applicants
-
-**Category Options**
-- Technology
-- Business
-- Design
-- Marketing
-- Data Science
-- Other
-
-**Expected Result**
-- Validate all required fields
-- Save opportunity to database
-- Link opportunity to logged-in admin
-- Display immediately **without page refresh**
+```bash
+POST /api/signup
+POST /api/login
+POST /api/logout
+POST /api/forgot-password
+GET /api/me
+```
 
 ---
 
-#### US-2.3 — Opportunities Persist After Login
+### Opportunity APIs
 
-- Opportunities must load after logout / login cycles
-- Stored only in the database — **no local storage usage**
-- Admins cannot access other admins' data
-
----
-
-#### US-2.4 — View Opportunity Details
-
-- Open a details modal
-- Show all saved fields
-- Close button available
+```bash
+GET /api/opportunities
+POST /api/opportunities
+GET /api/opportunities/<id>
+PUT /api/opportunities/<id>
+DELETE /api/opportunities/<id>
+```
 
 ---
 
-#### US-2.5 — Edit Opportunity
+## Project Structure
 
-- Edit button opens a pre-filled form
-- Apply the same validations as during creation
-- Update only the selected opportunity
-- Reflect changes instantly **without page refresh**
+```bash
+Qatar-foundation-admin-portal/
+│── app.py
+│── models.py
+│── requirements.txt
+│── templates/
+│   └── admin.html
+│── sky/
+│   ├── admin.css
+│   └── admin.js
+│── instance/
+│   └── qf_admin.db
+│── README.md
+```
 
 ---
 
-#### US-2.6 — Delete Opportunity
+## Installation
 
-- Show a confirmation dialog before deletion
-- Delete permanently from the database
-- Remove from UI immediately **without page refresh**
-- Only the creator admin can delete their own opportunity
+### Clone Repository
+
+```bash
+git clone https://github.com/RichaldMartin10/Qatar-foundation-admin-portal.git
+cd Qatar-foundation-admin-portal
+```
+
+---
+
+### Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Activate:
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+Linux/Mac:
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### Run Application
+
+```bash
+python app.py
+```
+
+---
+
+## Access Application
+
+Open in browser:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+## Testing Workflow
+
+1. Register a new admin account
+2. Login with credentials
+3. Create opportunities
+4. View created opportunities
+5. Edit opportunities
+6. Delete opportunities
+7. Logout
+8. Login again
+9. Verify data persistence
+
+---
+
+## Implementation Highlights
+
+* Existing UI preserved without redesign
+* Hardcoded opportunity cards removed
+* Dynamic opportunity loading from database
+* Edit/Delete functionality added
+* Data isolation between admin accounts
+* Session persistence implemented
+
+---
+
+## Future Improvements
+
+* Complete Reset Password Flow
+* Email Integration
+* Better Input Validation
+* Opportunity Search & Filters
+* Admin Profile Settings
+
+---
+
+## Author
+
+Richald Martin
+MCA Student
+Nitte Meenakshi Institute of Technology
